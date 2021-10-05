@@ -1,0 +1,73 @@
+{"level":"info","time":"2021-09-27T11:33:13-04:00","caller":"/home/cws/src/BeeBot/cmd/beebot/main.go:47","message":"BeeBot v1.00"}
+{"level":"debug","time":"2021-09-27T11:33:13-04:00","caller":"/home/cws/src/BeeBot/config/config.go:85","message":"WARN: Key useragent is empty"}
+{"level":"debug","time":"2021-09-27T11:33:13-04:00","caller":"/home/cws/src/BeeBot/config/config.go:85","message":"WARN: Key baseaddr is empty"}
+{"level":"debug","time":"2021-09-27T11:33:14-04:00","caller":"/home/cws/src/BeeBot/beebot.go:151","message":"Processed 1 comments"}
+{"level":"debug","time":"2021-09-27T11:33:15-04:00","caller":"/home/cws/src/BeeBot/beebot.go:172","message":"Processed 2 posts"}
+{"level":"info","time":"2021-09-27T11:38:23-04:00","caller":"/home/cws/src/BeeBot/cmd/beebot/main.go:47","message":"BeeBot v1.00"}
+{"level":"debug","time":"2021-09-27T11:38:23-04:00","caller":"/home/cws/src/BeeBot/config/config.go:85","message":"WARN: Key useragent is empty"}
+{"level":"debug","time":"2021-09-27T11:38:23-04:00","caller":"/home/cws/src/BeeBot/config/config.go:85","message":"WARN: Key baseaddr is empty"}
+{"level":"debug","time":"2021-09-27T11:38:24-04:00","caller":"/home/cws/src/BeeBot/config/config.go:85","message":"WARN: Key baseaddr is empty"}
+{"level":"info","time":"2021-09-27T11:39:31-04:00","caller":"/home/cws/src/BeeBot/cmd/beebot/main.go:47","message":"BeeBot v1.00"}
+{"level":"debug","time":"2021-09-27T11:39:31-04:00","caller":"/home/cws/src/BeeBot/config/config.go:85","message":"WARN: Key useragent is empty"}
+{"level":"info","time":"2021-09-27T11:41:02-04:00","caller":"/home/cws/src/BeeBot/cmd/beebot/main.go:47","message":"BeeBot v1.00"}
+{"level":"debug","time":"2021-09-27T11:41:02-04:00","caller":"/home/cws/src/BeeBot/config/config.go:85","message":"WARN: Key useragent is empty"}
+{"level":"info","time":"2021-09-27T11:41:56-04:00","caller":"/home/cws/src/BeeBot/cmd/beebot/main.go:47","message":"BeeBot v1.00"}
+{"level":"debug","time":"2021-09-27T11:41:56-04:00","caller":"/home/cws/src/BeeBot/config/config.go:85","message":"WARN: Key useragent is empty"}
+{"level":"info","time":"2021-09-27T11:42:37-04:00","caller":"/home/cws/src/BeeBot/cmd/beebot/main.go:47","message":"BeeBot v1.00"}
+{"level":"debug","time":"2021-09-27T11:42:37-04:00","caller":"/home/cws/src/BeeBot/config/config.go:85","message":"WARN: Key useragent is empty"}
+{"level":"info","time":"2021-09-27T11:43:33-04:00","caller":"/home/cws/src/BeeBot/cmd/beebot/main.go:47","message":"BeeBot v1.00"}
+{"level":"debug","time":"2021-09-27T11:43:33-04:00","caller":"/home/cws/src/BeeBot/config/config.go:85","message":"WARN: Key useragent is empty"}
+{"level":"info","time":"2021-09-27T12:05:12-04:00","caller":"/home/cws/src/BeeBot/cmd/beebot/main.go:47","message":"BeeBot v1.00"}
+{"level":"debug","time":"2021-09-27T12:05:12-04:00","caller":"/home/cws/src/BeeBot/config/config.go:85","message":"WARN: Key useragent is empty"}
+{"level":"info","time":"2021-09-27T12:12:01-04:00","caller":"/home/cws/src/BeeBot/cmd/beebot/main.go:47","message":"BeeBot v1.00"}
+{"level":"debug","time":"2021-09-27T12:12:01-04:00","caller":"/home/cws/src/BeeBot/config/config.go:85","message":"WARN: Key useragent is empty"}
+{"level":"info","time":"2021-09-27T12:12:29-04:00","caller":"/home/cws/src/BeeBot/cmd/beebot/main.go:47","message":"BeeBot v1.00"}
+{"level":"debug","time":"2021-09-27T12:12:29-04:00","caller":"/home/cws/src/BeeBot/config/config.go:85","message":"WARN: Key useragent is empty"}
+{"level":"info","time":"2021-09-27T12:24:40-04:00","caller":"/home/cws/src/BeeBot/cmd/beebot/main.go:47","message":"BeeBot v1.00"}
+{"level":"debug","time":"2021-09-27T12:24:40-04:00","caller":"/home/cws/src/BeeBot/config/config.go:85","message":"WARN: Key useragent is empty"}
+{"level":"debug","time":"2021-09-27T12:24:41-04:00","caller":"/home/cws/src/BeeBot/web.go:55","message":"using live mode"}
+{"level":"error","error":"open templates/templates/index.html: no such file or directory","time":"2021-09-27T12:24:43-04:00","caller":"/home/cws/src/BeeBot/web.go:47","message":"Could not read template"}
+{"level":"info","time":"2021-09-27T12:25:24-04:00","caller":"/home/cws/src/BeeBot/cmd/beebot/main.go:47","message":"BeeBot v1.00"}
+{"level":"error","error":"open templates/index.html: file does not exist","time":"2021-09-27T12:25:27-04:00","caller":"/home/cws/src/BeeBot/web.go:47","message":"Could not read template"}
+{"level":"info","time":"2021-09-27T12:25:54-04:00","caller":"/home/cws/src/BeeBot/cmd/beebot/main.go:47","message":"BeeBot v1.00"}
+{"level":"info","time":"2021-09-27T12:26:09-04:00","caller":"/home/cws/src/BeeBot/cmd/beebot/main.go:47","message":"BeeBot v1.00"}
+{"level":"debug","time":"2021-09-27T12:26:09-04:00","caller":"/home/cws/src/BeeBot/config/config.go:85","message":"WARN: Key useragent is empty"}
+{"level":"debug","time":"2021-09-27T12:26:10-04:00","caller":"/home/cws/src/BeeBot/web.go:55","message":"using live mode"}
+{"level":"info","time":"2021-09-27T12:26:32-04:00","caller":"/home/cws/src/BeeBot/cmd/beebot/main.go:47","message":"BeeBot v1.00"}
+{"level":"debug","time":"2021-09-27T12:26:32-04:00","caller":"/home/cws/src/BeeBot/config/config.go:85","message":"WARN: Key useragent is empty"}
+{"level":"debug","time":"2021-09-27T12:26:32-04:00","caller":"/home/cws/src/BeeBot/web.go:54","message":"using live mode"}
+{"level":"error","error":"open templates/log.html: no such file or directory","time":"2021-09-27T12:26:51-04:00","caller":"/home/cws/src/BeeBot/web.go:46","message":"Could not read template"}
+{"level":"info","time":"2021-09-27T15:40:20-04:00","caller":"/home/cws/src/BeeBot/cmd/beebot/main.go:47","message":"BeeBot v1.00"}
+{"level":"debug","time":"2021-09-27T15:40:20-04:00","caller":"/home/cws/src/BeeBot/config/config.go:85","message":"WARN: Key useragent is empty"}
+{"level":"debug","time":"2021-09-27T15:40:21-04:00","caller":"/home/cws/src/BeeBot/web.go:54","message":"using live mode"}
+{"level":"error","error":"open templates/filters.html: no such file or directory","time":"2021-09-27T16:03:48-04:00","caller":"/home/cws/src/BeeBot/web.go:46","message":"Could not read template"}
+{"level":"error","error":"unexpected end of JSON input","time":"2021-09-27T16:18:40-04:00","caller":"/home/cws/src/BeeBot/api.go:63","message":"Could not get configuration entries"}
+{"level":"error","error":"unexpected end of JSON input","time":"2021-09-27T16:19:26-04:00","caller":"/home/cws/src/BeeBot/api.go:63","message":"Could not get configuration entries"}
+{"level":"error","error":"unexpected end of JSON input","time":"2021-09-27T16:20:27-04:00","caller":"/home/cws/src/BeeBot/api.go:63","message":"Could not get configuration entries"}
+{"level":"info","time":"2021-09-27T16:21:45-04:00","caller":"/home/cws/src/BeeBot/cmd/beebot/main.go:47","message":"BeeBot v1.00"}
+{"level":"debug","time":"2021-09-27T16:21:45-04:00","caller":"/home/cws/src/BeeBot/config/config.go:85","message":"WARN: Key useragent is empty"}
+{"level":"debug","time":"2021-09-27T16:21:46-04:00","caller":"/home/cws/src/BeeBot/web.go:54","message":"using live mode"}
+{"level":"info","time":"2021-09-27T16:28:19-04:00","caller":"/home/cws/src/BeeBot/cmd/beebot/main.go:47","message":"BeeBot v1.00"}
+{"level":"debug","time":"2021-09-27T16:28:19-04:00","caller":"/home/cws/src/BeeBot/config/config.go:85","message":"WARN: Key useragent is empty"}
+{"level":"debug","time":"2021-09-27T16:28:20-04:00","caller":"/home/cws/src/BeeBot/web.go:54","message":"using live mode"}
+{"level":"error","error":"unexpected end of JSON input","time":"2021-09-27T16:28:24-04:00","caller":"/home/cws/src/BeeBot/api.go:82","message":"Could not get configuration entries"}
+{"level":"error","error":"unexpected end of JSON input","time":"2021-09-27T16:28:32-04:00","caller":"/home/cws/src/BeeBot/api.go:82","message":"Could not get configuration entries"}
+{"level":"error","error":"unexpected end of JSON input","time":"2021-09-27T16:28:34-04:00","caller":"/home/cws/src/BeeBot/api.go:82","message":"Could not get configuration entries"}
+{"level":"error","error":"json: cannot unmarshal object into Go value of type string","time":"2021-09-27T16:29:02-04:00","caller":"/home/cws/src/BeeBot/api.go:82","message":"Could not get configuration entries"}
+{"level":"info","time":"2021-09-27T16:29:37-04:00","caller":"/home/cws/src/BeeBot/cmd/beebot/main.go:47","message":"BeeBot v1.00"}
+{"level":"debug","time":"2021-09-27T16:29:37-04:00","caller":"/home/cws/src/BeeBot/config/config.go:85","message":"WARN: Key useragent is empty"}
+{"level":"debug","time":"2021-09-27T16:29:38-04:00","caller":"/home/cws/src/BeeBot/web.go:54","message":"using live mode"}
+{"level":"info","time":"2021-09-27T16:31:47-04:00","caller":"/home/cws/src/BeeBot/cmd/beebot/main.go:47","message":"BeeBot v1.00"}
+{"level":"debug","time":"2021-09-27T16:31:47-04:00","caller":"/home/cws/src/BeeBot/config/config.go:85","message":"WARN: Key useragent is empty"}
+{"level":"debug","time":"2021-09-27T16:31:48-04:00","caller":"/home/cws/src/BeeBot/web.go:54","message":"using live mode"}
+{"level":"info","time":"2021-09-27T16:37:11-04:00","caller":"/home/cws/src/BeeBot/cmd/beebot/main.go:47","message":"BeeBot v1.00"}
+{"level":"debug","time":"2021-09-27T16:37:11-04:00","caller":"/home/cws/src/BeeBot/config/config.go:85","message":"WARN: Key useragent is empty"}
+{"level":"debug","time":"2021-09-27T16:37:12-04:00","caller":"/home/cws/src/BeeBot/web.go:54","message":"using live mode"}
+{"level":"info","time":"2021-09-27T16:37:13-04:00","caller":"/home/cws/src/BeeBot/api.go:87","message":"Deleting config: "}
+{"level":"info","time":"2021-09-27T16:38:29-04:00","caller":"/home/cws/src/BeeBot/api.go:87","message":"Deleting config: "}
+{"level":"info","time":"2021-09-27T16:38:52-04:00","caller":"/home/cws/src/BeeBot/api.go:87","message":"Deleting config: "}
+{"level":"info","time":"2021-09-27T16:39:25-04:00","caller":"/home/cws/src/BeeBot/api.go:87","message":"Deleting config: "}
+{"level":"error","error":"json: cannot unmarshal object into Go struct field configEntry.key of type string","time":"2021-09-27T16:39:52-04:00","caller":"/home/cws/src/BeeBot/api.go:82","message":"Could not get configuration entries"}
+{"level":"info","time":"2021-09-27T16:39:52-04:00","caller":"/home/cws/src/BeeBot/api.go:87","message":"Deleting config: "}
+{"level":"info","time":"2021-09-27T16:41:08-04:00","caller":"/home/cws/src/BeeBot/api.go:87","message":"Deleting config: key2"}
+{"level":"info","time":"2021-09-27T16:41:10-04:00","caller":"/home/cws/src/BeeBot/api.go:87","message":"Deleting config: key"}
