@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Load required Bootstrap and BootstrapVue CSS -->
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+
+    <!-- Load polyfills to support older browsers -->
+    <script src="//polyfill.io/v3/polyfill.min.js?features=es2015%2CMutationObserver"></script>
+
+    <!-- Load Vue followed by BootstrapVue -->
+    <script src="//unpkg.com/vue@latest/dist/vue.min.js"></script>
+    <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+    <script src="https://unpkg.com/vue-router"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Memes</title>
+</head>
+<body>
+
+<div id="app">
+    <b-navbar>
+        <b-navbar-brand>BeeBot</b-navbar-brand>
+        <b-navbar-nav>
+            <b-nav-item v-for="(url, name) in nav" :href="url" :active="name === 'Log'">{{ name }}</b-nav-item>
+        </b-navbar-nav>
+    </b-navbar>
+    <b-alert
+            dismissable
+            variant="error"
+            v-if="err"
+            @dismissed="err = ''">
+        {{ err }}
+    </b-alert>
+    <b-table
+            :items="log"
+            :fields="fields">
+    </table>
+</div>
+
+<script>
+    var router = new VueRouter({
+        mode: 'history',
+        routes: [],
+    });
+    var app = new Vue({
+        el: '#app',
+        router,
+        data: {
+            err: '',
+            nav: [],
+            log: [],
+            fields: [
+                {key: 'level'},
+                {
+                    key: 'time', 
+                    sortable: true,
+                    sortDirection: 'asc'
+                },
+                {key: 'caller'},
+                {key: 'message'},
+            ],
+        },
+        mounted() {
+            axios.get('/api/v1/nav')
+                .catch(err => this.err = err)
+                .then(resp => {
+                    this.nav = resp.data;
+                })
+            this.refresh()
+        },
+        methods: {
+            refresh: function() {
+                axios.get('/api/v1/log')
+                    .catch(err => this.err = err)
+                    .then(resp => {
+                        let data = resp.data.split("\n");
+                        for (let d of data) {
+                            try {
+                                this.log.push(JSON.parse(d))
+                            } catch (e) {
+                                console.log(e)
+                            }
+                        }
+                    })
+            }
+        }
+    })
+</script>
+</body>
+</html>

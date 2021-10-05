@@ -1,0 +1,11 @@
+= BeeBot
+
+A bot to manage automatic posts and other moderation needs of https://reddit.com/r/mead[r/mead].
+
+== Usage
+
+Build and run `cmd/beebot`.
+
+== Is it good?
+
+It is good enough.
