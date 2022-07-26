@@ -5,8 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	beebot "code.chrissexton.org/cws/BeeBot"
-	"github.com/jzelinskie/geddit"
+	beebot "github.com/chrissexton/BeeBot"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 
@@ -22,7 +21,7 @@ var debug = flag.Bool("debug", false, "Turn debug printing on")
 var dbFilePath = flag.String("db", "beebot.db", "Database file path")
 var logFilePath = flag.String("log", "beebot.json", "Log file path")
 
-var o *geddit.OAuthSession
+var flairs = flag.Bool("flairs", false, "Just do flairs instead of run")
 
 func main() {
 	flag.Parse()
@@ -35,7 +34,7 @@ func main() {
 	consoleWriter := zerolog.ConsoleWriter{Out: os.Stdout}
 	logFile, err := os.OpenFile(*logFilePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
-		panic(err)
+		log.Fatal().Err(err).Msg("Fatal error")
 	}
 
 	multi := zerolog.MultiLevelWriter(consoleWriter, logFile)
@@ -49,6 +48,11 @@ func main() {
 	b, err := beebot.New(*dbFilePath, *logFilePath, *debug)
 	if err != nil {
 		log.Fatal().Err(err).Msg("beebot died")
+	}
+
+	if *flairs {
+		log.Debug().Msgf("Flairs return: %e", b.Flairs())
+		return
 	}
 
 	// b.Run()

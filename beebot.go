@@ -1,14 +1,14 @@
 package beebot
 
 import (
-	"fmt"
+	"context"
 	"time"
 
-	"code.chrissexton.org/cws/BeeBot/config"
+	"github.com/chrissexton/BeeBot/config"
 	"github.com/jmoiron/sqlx"
 	"github.com/jpillora/backoff"
-	"github.com/jzelinskie/geddit"
 	"github.com/rs/zerolog/log"
+	"github.com/vartanbeno/go-reddit/v2/reddit"
 )
 
 // DefaultAddr is the HTTP service address
@@ -25,7 +25,7 @@ type BeeBot struct {
 	db *sqlx.DB
 	c  *config.Config
 
-	*geddit.OAuthSession
+	r *reddit.Client
 }
 
 // New creates a BeeBot instance, its database, and connects to reddit
@@ -39,37 +39,31 @@ func New(dbFilePath, logFilePath string, debug bool) (*BeeBot, error) {
 
 	clientID := c.Get("clientid", "")
 	clientSecret := c.Get("clientsecret", "")
-	userAgent := c.Get("userAgent", "BeeBot")
-	baseAddr := c.Get("baseaddr", DefaultAddr)
+	//userAgent := c.Get("userAgent", "BeeBot")
+	//baseAddr := c.Get("baseaddr", DefaultAddr)
 	userName := c.Get("username", "")
 	password := c.Get("password", "")
-	reddit := c.Get("reddit", "")
+	myReddit := c.Get("reddit", "")
 
-	o, err := geddit.NewOAuthSession(
-		clientID,
-		clientSecret,
-		userAgent,
-		fmt.Sprintf("http://%s/cb", baseAddr),
-	)
-	if err != nil {
-		return nil, err
-	}
-
-	if err = o.LoginAuth(userName, password); err != nil {
-		return nil, err
-	}
+	credentials := reddit.Credentials{ID: clientID, Secret: clientSecret, Username: userName, Password: password}
+	log.Debug().Interface("credentials", credentials).Msgf("About to log in")
+	client, err := reddit.NewClient(credentials)
+	log.Debug().Err(err).Msgf("Maybe logged in")
 
 	b := &BeeBot{
-		reddit:       reddit,
-		logPath:      logFilePath,
-		nav:          make(map[string]string),
-		debug:        debug,
-		db:           db,
-		c:            c,
-		OAuthSession: o,
+		reddit:  myReddit,
+		logPath: logFilePath,
+		nav:     make(map[string]string),
+		debug:   debug,
+		db:      db,
+		c:       c,
+		r:       client,
 	}
 
-	b.setupDB()
+	log.Debug().Msgf("Setting up DB")
+	if err = b.setupDB(); err != nil {
+		return nil, err
+	}
 
 	return b, nil
 }
@@ -98,6 +92,18 @@ func (b *BeeBot) Serve(dur time.Duration, done chan (bool)) {
 
 }
 
+// Flairs prints out who has what flair
+func (b *BeeBot) Flairs() error {
+	log.Debug().Msgf("Flairs()")
+	choices, choice, _, err := b.r.Flair.Choices(context.Background(), b.reddit)
+	log.Debug().
+		Interface("choices", choices).
+		Interface("choice", choice).
+		Err(err).
+		Msgf("Done getting flair")
+	return nil
+}
+
 // Run triggers a single query and Filter of the reddit
 func (b *BeeBot) Run() error {
 
@@ -120,47 +126,47 @@ func (b *BeeBot) Run() error {
 		}
 	}
 
-	comments, err := b.SubredditComments(b.reddit)
-	if handleErr(err, "could not get subreddit comments for %s", b.reddit) {
-		return err
-	}
-	for _, c := range comments {
-		for _, f := range filters {
-			if f.regex.MatchString(c.Body) {
-				if _, ok := offenders[f.Name][c.Author]; ok {
-					log.Debug().Msgf("Skipping offender %s", c.Author)
-				} else {
-					offenders[f.Name][c.Author] = true
-					_, err = b.db.Exec(`insert into offenders (offender, type) values (?, ?)`, c.Author, f.Name)
-					if handleErr(err, "could not insert raisin offenders") {
-						return err
-					}
-				}
-			}
-		}
-	}
-	log.Debug().Msgf("Processed %d comments", len(comments))
-
-	subOpts := geddit.ListingOptions{
-		Limit: 10,
-	}
-	posts, err := b.SubredditSubmissions(b.reddit, geddit.NewSubmissions, subOpts)
-	for _, p := range posts {
-		for _, f := range filters {
-			if f.regex.MatchString(p.Title) || f.regex.MatchString(p.Selftext) {
-				if _, ok := offenders[f.Name][p.Author]; ok {
-					log.Debug().Msgf("Skipping offender %s", p.Author)
-				} else {
-					offenders[f.Name][p.Author] = true
-					_, err = b.db.Exec(`insert into offenders (offender, type) values (?, ?)`, p.Author, f.Name)
-					if handleErr(err, "could not insert raisin offenders") {
-						return err
-					}
-				}
-			}
-		}
-	}
-	log.Debug().Msgf("Processed %d posts", len(posts))
+	//comments, err := b.SubredditComments(b.reddit)
+	//if handleErr(err, "could not get subreddit comments for %s", b.reddit) {
+	//	return err
+	//}
+	//for _, c := range comments {
+	//	for _, f := range filters {
+	//		if f.regex.MatchString(c.Body) {
+	//			if _, ok := offenders[f.Name][c.Author]; ok {
+	//				log.Debug().Msgf("Skipping offender %s", c.Author)
+	//			} else {
+	//				offenders[f.Name][c.Author] = true
+	//				_, err = b.db.Exec(`insert into offenders (offender, type) values (?, ?)`, c.Author, f.Name)
+	//				if handleErr(err, "could not insert raisin offenders") {
+	//					return err
+	//				}
+	//			}
+	//		}
+	//	}
+	//}
+	//log.Debug().Msgf("Processed %d comments", len(comments))
+	//
+	//subOpts := geddit.ListingOptions{
+	//	Limit: 10,
+	//}
+	//posts, err := b.SubredditSubmissions(b.reddit, geddit.NewSubmissions, subOpts)
+	//for _, p := range posts {
+	//	for _, f := range filters {
+	//		if f.regex.MatchString(p.Title) || f.regex.MatchString(p.Selftext) {
+	//			if _, ok := offenders[f.Name][p.Author]; ok {
+	//				log.Debug().Msgf("Skipping offender %s", p.Author)
+	//			} else {
+	//				offenders[f.Name][p.Author] = true
+	//				_, err = b.db.Exec(`insert into offenders (offender, type) values (?, ?)`, p.Author, f.Name)
+	//				if handleErr(err, "could not insert raisin offenders") {
+	//					return err
+	//				}
+	//			}
+	//		}
+	//	}
+	//}
+	//log.Debug().Msgf("Processed %d posts", len(posts))
 
 	return nil
 }
