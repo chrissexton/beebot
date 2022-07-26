@@ -34,6 +34,7 @@ func (b *BeeBot) ServeWeb() {
 
 	// Don't want to block for this (later)
 	baseAddr := b.c.Get("baseaddr", DefaultAddr)
+	log.Info().Msgf("Serving on http://%s", baseAddr)
 	log.Fatal().
 		Err(http.ListenAndServe(baseAddr, router)).
 		Msg("HTTP server")

@@ -32,10 +32,13 @@
             @dismissed="err = ''">
         {{ err }}
     </b-alert>
-    <b-table
-            :items="log"
-            :fields="fields">
-    </table>
+    <b-overlay :visible="loading">
+        <b-table
+                per-page="50"
+                :items="log"
+                :fields="fields">
+        </b-table>
+    </b-overlay>
 </div>
 
 <script>
@@ -48,6 +51,7 @@
         router,
         data: {
             err: '',
+            loading: true,
             nav: [],
             log: [],
             fields: [
@@ -63,26 +67,22 @@
         },
         mounted() {
             axios.get('/api/v1/nav')
-                .catch(err => this.err = err)
                 .then(resp => {
                     this.nav = resp.data;
                 })
+                .catch(err => this.err = err)
             this.refresh()
         },
         methods: {
             refresh: function() {
                 axios.get('/api/v1/log')
-                    .catch(err => this.err = err)
                     .then(resp => {
-                        let data = resp.data.split("\n");
-                        for (let d of data) {
-                            try {
-                                this.log.push(JSON.parse(d))
-                            } catch (e) {
-                                console.log(e)
-                            }
+                        for (let entry of resp.data) {
+                            this.log.append(JSON.parse(entry))
                         }
                     })
+                    .catch(err => this.err = err)
+                    .finally(() => this.loading = false)
             }
         }
     })

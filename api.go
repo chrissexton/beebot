@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/go-chi/chi"
 	"github.com/rs/zerolog/log"
@@ -23,7 +24,6 @@ func (b *BeeBot) apiEndpoints() http.Handler {
 	r.Route("/filters", func(r chi.Router) {
 		r.Get("/", b.getFilters)
 		r.Post("/", b.postFilters)
-		r.Put("/{name}", b.putFilters)
 		r.Delete("/", b.deleteFilters)
 	})
 	r.Route("/log", func(r chi.Router) {
@@ -50,6 +50,7 @@ func (b *BeeBot) getConfig(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(500)
 		j, _ := json.Marshal(err)
 		w.Write(j)
+		return
 	}
 	j, _ := json.Marshal(entries)
 	w.Write(j)
@@ -64,6 +65,7 @@ func (b *BeeBot) setConfig(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(400)
 		j, _ := json.Marshal(err)
 		w.Write(j)
+		return
 	}
 	err = b.c.Set(config.Key, config.Value)
 	if err != nil {
@@ -71,6 +73,7 @@ func (b *BeeBot) setConfig(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(400)
 		j, _ := json.Marshal(err)
 		w.Write(j)
+		return
 	}
 }
 
@@ -83,6 +86,7 @@ func (b *BeeBot) deleteConfig(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(400)
 		j, _ := json.Marshal(err)
 		w.Write(j)
+		return
 	}
 	log.Info().Msgf("Deleting config: %s", config.Key)
 	err = b.c.Unset(config.Key)
@@ -91,6 +95,7 @@ func (b *BeeBot) deleteConfig(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(400)
 		j, _ := json.Marshal(err)
 		w.Write(j)
+		return
 	}
 	resp, _ := json.Marshal(struct {
 		Status string `json:"status"`
@@ -105,6 +110,7 @@ func (b *BeeBot) getFilters(w http.ResponseWriter, r *http.Request) {
 	}
 	j, _ := json.Marshal(filters)
 	w.Write(j)
+	return
 }
 
 func (b *BeeBot) postFilters(w http.ResponseWriter, r *http.Request) {
@@ -117,6 +123,7 @@ func (b *BeeBot) postFilters(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(400)
 		j, _ := json.Marshal(err)
 		w.Write(j)
+		return
 	}
 	err = filter.Save()
 	if err != nil {
@@ -124,6 +131,7 @@ func (b *BeeBot) postFilters(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(400)
 		j, _ := json.Marshal(err)
 		w.Write(j)
+		return
 	}
 	out, err := json.Marshal(filter)
 	if err != nil {
@@ -131,14 +139,31 @@ func (b *BeeBot) postFilters(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(500)
 		j, _ := json.Marshal(err)
 		w.Write(j)
+		return
 	}
 	w.Write(out)
 }
 
-func (b *BeeBot) putFilters(w http.ResponseWriter, r *http.Request) {
-}
-
 func (b *BeeBot) deleteFilters(w http.ResponseWriter, r *http.Request) {
+	req := struct{Name string `json:"name"`}{}
+	body, _ := ioutil.ReadAll(r.Body)
+	err := json.Unmarshal(body, &req)
+	if err != nil || req.Name == "" {
+		log.Error().Err(err).Msg("Could not unmarshal delete key")
+		w.WriteHeader(400)
+		j, _ := json.Marshal(err)
+		w.Write(j)
+		return
+	}
+	err = Remove(b.db, req.Name)
+	if err != nil {
+		log.Error().Err(err).Msg("Could not delete filter")
+		w.WriteHeader(400)
+		j, _ := json.Marshal(err)
+		w.Write(j)
+		return
+	}
+	w.WriteHeader(200)
 }
 
 func (b *BeeBot) getLog(w http.ResponseWriter, r *http.Request) {
@@ -149,6 +174,9 @@ func (b *BeeBot) getLog(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(500)
 		j, _ := json.Marshal(err)
 		w.Write(j)
+		return
 	}
-	w.Write(logs)
+	splitLogs := strings.Split(string(logs), "\n")
+	output, _ := json.Marshal(splitLogs)
+	w.Write(output)
 }

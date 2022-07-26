@@ -9,10 +9,10 @@ import (
 
 // Filter represents a comment response for the bot
 type Filter struct {
-	ID       int64
-	Name     string
-	RegexStr string `db:"regex"`
-	Template string
+	ID       int64  `json:"id"`
+	Name     string `json:"name"`
+	RegexStr string `json:"regexStr" db:"regex"`
+	Template string `json:"template"`
 
 	regex *regexp.Regexp
 	db    *sqlx.DB
@@ -43,10 +43,16 @@ func (f *Filter) populate(db *sqlx.DB) {
 	f.db = db
 }
 
+func Remove(db *sqlx.DB, name string) error {
+	q := `delete from filters where name=?`
+	_, err := db.Exec(q, name)
+	return err
+}
+
 // Save commits a template to the database
 func (f *Filter) Save() error {
-	q := `insert into filters (name, regexstr, template) values (?, ? ,?)
-			on conflict(name) do update set regexstr=?, template=?;`
+	q := `insert into filters (name, regex, template) values (?, ? ,?)
+			on conflict(name) do update set regex=?, template=?;`
 	res, err := f.db.Exec(q, f.Name, f.RegexStr, f.Template,
 		f.RegexStr, f.Template)
 	if err != nil {
