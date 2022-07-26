@@ -69,8 +69,12 @@ func New(dbFilePath, logFilePath string, debug bool) (*BeeBot, error) {
 }
 
 // Serve starts a polling service with exponential backoff
-func (b *BeeBot) Serve(dur time.Duration, done chan (bool)) {
-	backoff := &backoff.Backoff{
+func (b *BeeBot) Serve(done chan bool) {
+	b.serve(done)
+}
+
+func (b *BeeBot) serve(done chan bool) {
+	backauff := &backoff.Backoff{
 		Min:    time.Duration(b.c.GetInt("backoff.min", 100)) * time.Millisecond,
 		Max:    time.Duration(b.c.GetInt("backoff.max", 10)) * time.Second,
 		Factor: b.c.GetFloat64("backoff.factor", 2),
@@ -78,14 +82,14 @@ func (b *BeeBot) Serve(dur time.Duration, done chan (bool)) {
 	}
 
 	for {
-		timer := time.NewTimer(backoff.Duration())
+		timer := time.NewTimer(backauff.Duration())
 		select {
 		case <-done:
 			timer.Stop()
 			return
 		case <-timer.C:
 			if err := b.Run(); err == nil {
-				backoff.Reset()
+				backauff.Reset()
 			}
 		}
 	}
@@ -106,6 +110,10 @@ func (b *BeeBot) Flairs() error {
 
 // Run triggers a single query and Filter of the reddit
 func (b *BeeBot) Run() error {
+	return b.run()
+}
+
+func (b *BeeBot) run() error {
 
 	offenders := map[string]map[string]bool{}
 
