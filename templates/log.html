@@ -36,6 +36,8 @@
         <b-table
                 per-page="50"
                 :items="log"
+                sort-by="time"
+                sort-desc
                 :fields="fields">
         </b-table>
     </b-overlay>
@@ -55,12 +57,12 @@
             nav: [],
             log: [],
             fields: [
-                {key: 'level'},
                 {
                     key: 'time', 
                     sortable: true,
-                    sortDirection: 'asc'
+                    sortDirection: 'desc'
                 },
+                {key: 'level'},
                 {key: 'caller'},
                 {key: 'message'},
             ],
@@ -78,8 +80,9 @@
                 axios.get('/api/v1/log')
                     .then(resp => {
                         for (let entry of resp.data) {
-                            this.log.append(JSON.parse(entry))
+                            this.log.push(JSON.parse(entry))
                         }
+                        console.log('read logs into page')
                     })
                     .catch(err => this.err = err)
                     .finally(() => this.loading = false)

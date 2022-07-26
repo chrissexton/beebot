@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
 <head>
     <!-- Load required Bootstrap and BootstrapVue CSS -->
     <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
@@ -15,7 +15,6 @@
     <script src="//unpkg.com/axios/dist/axios.min.js"></script>
     <meta charset="UTF-8">
     <title>Memes</title>
-    <script src="http://localhost:8098"></script>
 </head>
 <body>
 
@@ -50,7 +49,6 @@
                         <b-form-textarea
                                 placeholder="Template..."
                                 v-model="newfilters.template"></b-form-textarea>
-                        <b-input placeholder="Template..." v-model="newfilters.template"></b-input>
                     </b-col>
                 </b-row>
                 <b-row>
